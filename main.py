@@ -3,9 +3,9 @@ from bs4 import BeautifulSoup
 
 keyward = input("比較したい商品を入力してください:\n")
 
-
+"""楽天での価格を取得する"""
 def get_rakuten():
-    # 楽天ではf=2で送料無料の商品のみ表示、s=2で価格の安い順にソート
+    # 楽天ではURLの最後にf=2で送料無料の商品のみ表示、s=2で価格の安い順にソート
     url = "https://search.rakuten.co.jp/search/mall/" + keyward + "?f=2&s=2"
     responce = requests.get(url)
     # htmlの情報を取得
@@ -32,9 +32,9 @@ def get_rakuten():
     selected_price = int(price_list[selected_item_number - 1])
     return selected_price
 
-
+"""yahooでの価格を取得する"""
 def get_yahoo():
-    # yahooではship=onで送料無料の商品のみ表示、X＝2で価格の安い順にソート
+    # yahooではURLの最後にship=onで送料無料の商品のみ表示、X＝2で価格の安い順にソート
     url = "https://shopping.yahoo.co.jp/search?&p=" + keyward + '&X=2&ship=on'
     responce = requests.get(url)
     html = responce.text
@@ -65,5 +65,4 @@ if rakuten_price > yahoo_price:
 
 elif yahoo_price > rakuten_price:
     print("楽天の方が" + str(abs(rakuten_price - yahoo_price)) + "円安いです！")
-    
 else:print("楽天とyahooで同じ値段です")
